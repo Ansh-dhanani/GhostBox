@@ -66,6 +66,26 @@ cd /opt/ghostbox
 npm install --omit=dev 2>&1 || npm install ws 2>&1
 
 # Download or create server.mjs (WebSocket terminal server)
+# Try to clone from GitHub for the full app
+GHOSTBOX_REPO="https://github.com/Ansh-dhanani/GhostBox.git"
+if git clone "$GHOSTBOX_REPO" /opt/ghostbox-repo 2>/dev/null; then
+  echo "Cloned repository. Building..."
+  cd /opt/ghostbox-repo
+  pnpm install 2>&1 || true
+  if [ -f "apps/web/next.config.mjs" ]; then
+    pnpm --filter @ghostbox/web build 2>&1 || true
+    [ -d "apps/web/out" ] && cp -r apps/web/out/* /opt/ghostbox/web/
+  fi
+  cp -r scripts/*.mjs /opt/ghostbox/scripts/ 2>/dev/null || true
+  # Copy node_modules for production server
+  cp -r node_modules /opt/ghostbox/node_modules 2>/dev/null || true
+  cd /
+  rm -rf /opt/ghostbox-repo
+  echo "Repository build complete."
+else
+  echo "Git clone failed, using embedded server."
+fi
+
 cat > /opt/ghostbox/scripts/server.mjs << 'SERVEOF'
 import { createServer } from "node:http";
 import { setupWebSocket } from "./terminal-server.mjs";
