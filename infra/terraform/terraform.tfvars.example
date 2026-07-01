@@ -1,0 +1,9 @@
+# Copy this to terraform.tfvars and fill in your values.
+# terraform.tfvars is gitignored. Never commit it.
+
+aws_region     = "ap-south-1"
+your_ip_cidr   = "YOUR_PUBLIC_IP/32"   # get from https://checkip.amazonaws.com
+key_name       = "your-key-pair-name"  # the name in AWS EC2 > Key Pairs
+login_user     = "ansh"
+login_password = "choose-a-strong-password"
+vnc_password   = "max8ch"              # VNC passwords must be 6 to 8 characters

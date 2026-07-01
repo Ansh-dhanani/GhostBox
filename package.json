@@ -1,0 +1,18 @@
+{
+  "name": "ghostbox",
+  "private": true,
+  "packageManager": "pnpm@10.25.0",
+
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "pnpm --filter @ghostbox/web dev",
+    "dev:terminal": "node scripts/server.mjs",
+    "build": "pnpm --filter @ghostbox/web build",
+    "start": "node scripts/server.mjs",
+    "setup": "node scripts/check-deps.mjs"
+  },
+  "dependencies": {
+    "node-pty": "^1.1.0",
+    "ws": "^8.18.2"
+  }
+}

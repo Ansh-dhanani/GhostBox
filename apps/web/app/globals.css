@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0f;
+  --dock-bg: rgba(17, 17, 24, 0.85);
+  --dock-border: #2f2f35;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --accent: #38bdf8;
+  --accent-2: #a3e635;
+  --danger: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.fullPage {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.terminalWrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.terminalRoot {
+  flex: 1;
+  min-height: 0;
+  padding: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.terminalRoot .xterm {
+  height: 100%;
+  padding: 0;
+}
+
+.terminalRoot .xterm-viewport {
+  overflow-y: scroll !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: #2f2f35 transparent !important;
+}
+
+.terminalRoot .xterm-viewport::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.terminalRoot .xterm-viewport::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.terminalRoot .xterm-viewport::-webkit-scrollbar-thumb {
+  background: #2f2f35 !important;
+  border-radius: 4px !important;
+}
+
+.dockWrapper {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+}
+
+.dock {
+  background: rgba(45, 45, 45, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  user-select: none;
+}
+
+.dockStage {
+  position: relative;
+}
+
+.dockApp {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  transform-origin: bottom center;
+}
+
+.dockAppIcon {
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.terminalRoot .xterm-selection div {
+  background: rgba(56, 189, 248, 0.15) !important;
+}
+
+/* Setup page */
+.setupPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.setupCard {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.setupHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.setupHeader h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+
+.setupHeader .dim {
+  color: var(--muted);
+}
+
+.envBadge {
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid #2f2f35;
+  padding: 2px 10px;
+}
+
+.toolGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toolCard {
+  border: 1px solid #2f2f35;
+  background: #111118;
+  transition: border-color 0.15s;
+}
+
+.toolCard.done {
+  border-color: #1a3a2a;
+}
+
+.toolCard.fail {
+  border-color: #3a1a1a;
+}
+
+.toolCardTop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.toolIcon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.toolIcon.idle {
+  color: var(--muted);
+}
+
+.toolIcon.installing {
+  color: var(--accent);
+}
+
+.toolIcon.done {
+  color: var(--accent-2);
+}
+
+.toolIcon.fail {
+  color: var(--danger);
+}
+
+.toolInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toolName {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.toolDesc {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toolInstallBtn {
+  flex-shrink: 0;
+  font-size: 12px;
+  padding: 5px 14px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  transition: background 0.15s, color 0.15s;
+}
+
+.toolInstallBtn:hover:not(:disabled) {
+  background: var(--accent);
+  color: #031018;
+}
+
+.toolInstallBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.toolStatus {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.toolStatus.installing {
+  color: var(--accent);
+}
+
+.toolStatus.done {
+  color: var(--accent-2);
+}
+
+.toolStatus.fail {
+  color: var(--danger);
+}
+
+.toolLog {
+  border-top: 1px solid #1a1a20;
+  padding: 10px 16px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-family: Consolas, 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.logLine {
+  color: var(--muted);
+}
+
+.installAllBtn {
+  align-self: flex-start;
+  font-size: 13px;
+  padding: 10px 24px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #031018;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.installAllBtn:hover {
+  background: #60c8ff;
+}
+
+.installAllBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.installingBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.allDone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--accent-2);
+}
+
+.doneIcon {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent-2);
+  font-size: 12px;
+}
+
+.connFailed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.failIcon {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--danger);
+  font-size: 12px;
+}

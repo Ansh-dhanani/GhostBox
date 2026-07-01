@@ -1,0 +1,8 @@
+packages:
+  - "apps/*"
+
+onlyBuiltDependencies:
+  - node-pty
+
+patchedDependencies:
+  node-pty: patches/node-pty.patch
